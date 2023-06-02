@@ -4,7 +4,7 @@ const { City } = require('../models/index');
 
 class CityRepository {
 
-    async createCity({ name }) { 
+    async createCity({ name }) {
         try {
             const city = await City.create({
                 name
@@ -12,7 +12,7 @@ class CityRepository {
             return city;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
-            throw {error};
+            throw { error };
         }
     }
 
@@ -26,7 +26,7 @@ class CityRepository {
             return true;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
-            throw {error};
+            throw { error };
         }
     }
 
@@ -47,7 +47,7 @@ class CityRepository {
             return city;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
-            throw {error};
+            throw { error };
         }
     }
 
@@ -57,13 +57,13 @@ class CityRepository {
             return city;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
-            throw {error};
+            throw { error };
         }
     }
 
     async getAllCities(filter) { // filter can be empty also
         try {
-            if(filter.name) {
+            if (filter.name) {
                 const cities = await City.findAll({
                     where: {
                         name: {
@@ -77,7 +77,7 @@ class CityRepository {
             return cities;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
-            throw {error};
+            throw { error };
         }
     }
 

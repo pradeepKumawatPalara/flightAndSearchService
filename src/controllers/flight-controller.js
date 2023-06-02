@@ -1,19 +1,20 @@
-const {FlightService} = require('../services/index');
+const { FlightService } = require('../services/index');
 const { SuccessCodes } = require('../utils/error-codes');
 
 const flightService = new FlightService();
 
-const create = async (req, res) => {
+const create = async(req, res) => {
     try {
         const flightRequestData = {
-            flightNumber: req.body.flightNumber,
-            airplaneId: req.body.airplaneId,
-            departureAirportId: req.body.departureAirportId,
-            arrivalAirportId: req.body.arrivalAirportId,
-            arrivalTime: req.body.arrivalTime,
-            departureTime: req.body.departureTime,
-            price: req.body.price
-        }
+                flightNumber: req.body.flightNumber,
+                airplaneId: req.body.airplaneId,
+                departureAirportId: req.body.departureAirportId,
+                arrivalAirportId: req.body.arrivalAirportId,
+                arrivalTime: req.body.arrivalTime,
+                departureTime: req.body.departureTime,
+                price: req.body.price
+            }
+            //  console.log(flightRequestData)
         const flight = await flightService.createFlight(flightRequestData);
         return res.status(SuccessCodes.CREATED).json({
             data: flight,
@@ -32,7 +33,7 @@ const create = async (req, res) => {
     }
 }
 
-const getAll = async (req, res) => {
+const getAll = async(req, res) => {
     try {
         console.log(req.query);
         const response = await flightService.getAllFlightData(req.query);
@@ -53,8 +54,9 @@ const getAll = async (req, res) => {
     }
 }
 
-const get = async (req, res) => {
+const get = async(req, res) => {
     try {
+        // console.log("in flight controller")
         const response = await flightService.getFlight(req.params.id);
         return res.status(SuccessCodes.OK).json({
             data: response,
@@ -73,7 +75,7 @@ const get = async (req, res) => {
     }
 }
 
-const update = async (req, res) => {
+const update = async(req, res) => {
     try {
         const response = await flightService.updateFlight(req.params.id, req.body);
         return res.status(SuccessCodes.OK).json({
@@ -92,10 +94,33 @@ const update = async (req, res) => {
         });
     }
 }
+const destory = async(req, res) => {
+    try {
+
+        const response = await flightService.destroyFlight(req.params.id);
+        return res.status(SuccessCodes.OK).json({
+            data: response,
+            success: true,
+            err: {},
+            message: 'Successfully deleted the flight'
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: 'Not able to delete the flight',
+            err: error
+        });
+    }
+
+
+}
 
 module.exports = {
     create,
     getAll,
     get,
-    update
+    update,
+    destory
 }
